@@ -25,7 +25,6 @@ command_list = "Raspolozive komande:\n" \
 def start(bot, update):
     user_id = update.message.chat_id
     if find_user(user_id, users) is None:
-    # if next((x for x in users if x["chat_id"] == update.message.chat_id), None) is None:
         user = {
             "chat_id": user_id,
             "name": update.message.chat.name,
@@ -37,13 +36,13 @@ def start(bot, update):
     bot.sendMessage(chat_id=user_id, text="I'm a bot dude!")
 
 def not_recognized():
-    return "Niste se registrovali. Registruj se sa /start komandom"
+    return "Niste se registrovali. Registruj se sa \n/start komandom"
 
-def find_user(chat_id, user_list):
-    return next((x for x in user_list if x["chat_id"] == chat_id), None)
+def find_user(user_id, user_list):
+    return next((x for x in user_list if x["chat_id"] == user_id), None)
 
-def remove_from_list(chat_id, user_list):
-    user_list.remove(next((x for x in users if x["chat_id"] == chat_id), None))
+def remove_from_list(user_id, user_list):
+    user_list.remove(next((x for x in users if x["chat_id"] == user_id), None))
 
 def accept(bot, update):
     user_id = update.message.chat_id
@@ -91,6 +90,5 @@ dispatcher.addTelegramCommandHandler('ne', decline)
 dispatcher.addTelegramCommandHandler('ko_dolazi', get_accepted_participants)
 dispatcher.addTelegramCommandHandler('ko_ne_dolazi', get_declined_participants)
 dispatcher.addUnknownTelegramCommandHandler(help)
-
 
 updater.start_polling()
